@@ -1,6 +1,7 @@
 ﻿using BLL;
 using DTO;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace CSDLNCProject
@@ -9,13 +10,13 @@ namespace CSDLNCProject
     {
         private UpdateNhanVienBLL updateNhanVienBLL = new UpdateNhanVienBLL();
         private NhanVienDTO currentNhanVien; // Lưu trữ nhân viên cần sửa
-       
+        private PhongBanBLL phongBanBLL = new PhongBanBLL();
 
         public FormAddNewEmployee(FormMain mainForm, NhanVienDTO nhanVien = null)
         {
             InitializeComponent();
-            
-            LoadComboBoxData(); // Load dữ liệu các ComboBox
+            ComBoBoxData();
+            LoadComboBoxPhongBan(); // Load dữ liệu các ComboBox
 
             if (nhanVien != null)
             {
@@ -35,19 +36,33 @@ namespace CSDLNCProject
             return differenceInMonths > 1 || (differenceInMonths == 1 && dateEnd.Day >= dateStart.Day);
         }
 
-        private void LoadComboBoxData()
+        private void LoadComboBoxPhongBan()
         {
-            // Dữ liệu sẵn cho ComboBox
-            cboGioiTinh.Items.Add("Nam");
-            cboGioiTinh.Items.Add("Nữ");
-            cboGioiTinh.Items.Add("Khác");
+            // Lấy danh sách phòng ban từ lớp BLL
+            List<PhongBanDTO> listPhongBan = phongBanBLL.GetAllPhongBan();
 
-            cboPhongBan.Items.Add("Nhân viên");
-            cboPhongBan.Items.Add("Trưởng phòng");
-            cboPhongBan.Items.Add("Phó phòng");
-            cboPhongBan.Items.Add("Giám đốc");
+            // Đảm bảo ComboBox sạch dữ liệu cũ
+            cboPhongBan.Items.Clear();
+
+            // Thêm các phòng ban vào ComboBox
+            foreach (var phongBan in listPhongBan)
+            {
+                cboPhongBan.Items.Add(phongBan.phongban); // Thêm tên phòng ban
+            }
+
+            // Tùy chọn: Chọn phòng ban đầu tiên trong ComboBox (nếu có)
+            if (cboPhongBan.Items.Count > 0)
+            {
+                cboPhongBan.SelectedIndex = 0; // Chọn item đầu tiên
+            }
         }
 
+        private void ComBoBoxData()
+        {
+            cboGioiTinh.Items.Add("Nam");
+            cboGioiTinh.Items.Add("Nữ");
+
+        }
         private void LoadDataToForm(NhanVienDTO nhanVien)
         {
 
