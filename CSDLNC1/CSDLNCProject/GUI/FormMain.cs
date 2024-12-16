@@ -208,5 +208,11 @@ namespace CSDLNCProject
             ThongKe thongKe = new ThongKe();
             thongKe.Show();
         }
+
+        private void phòngBanToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormDepartment formDepartment = new FormDepartment();
+            formDepartment.Show();
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace CSDLNCProject
         // Load dữ liệu khi form mở
         private void ThongKe_Load(object sender, EventArgs e)
         {
-            LoadThongKeData();
+            
         }
 
         // Hàm load dữ liệu thống kê từ BLL
@@ -60,6 +60,11 @@ namespace CSDLNCProject
 
                 textLuongNhanDuoc.Text = selectedRow.Cells["luongnhanduoc"].Value.ToString();
             }
+        }
+
+        private void ThongKe_Load_1(object sender, EventArgs e)
+        {
+            LoadThongKeData();
         }
     }
 }
